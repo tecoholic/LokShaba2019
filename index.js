@@ -35,7 +35,7 @@ _.each(excelsheet.Sheets, (sheet, constituency) => {
       evm_vote_count: parseInt(row['EVM Votes']),
       postal_vote_count: parseInt(row['Postal Votes']),
       total_vote_count: parseInt(row['Total Votes']),
-      percentage_total_vote: parseInt(row['% of Votes']),
+      percentage_total_vote: parseFloat(row['% of Votes']),
     });
 
   });
