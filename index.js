@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const fs = require('fs');
 const xlsx = require('xlsx');
-
+const slugs = require("slugs")
 
 const excelsheet = xlsx.readFile('./LokShaba 2019 TN Candidate Vote Shares.ods', {
   type: 'file'
@@ -15,7 +15,7 @@ let constituencies = [];
 _.each(excelsheet.Sheets, (sheet, constituency) => {
 
   if (constituency === 'Collated') {
-    return; // for report generation
+    return; // for report generationc
   }
 
   console.log('constituency => ', constituency);
@@ -49,7 +49,21 @@ _.each(excelsheet.Sheets, (sheet, constituency) => {
   const winningParty = constituencyWise[0];
   const runnerParty = constituencyWise[1];
 
+  const VoteStats = constituencyWise.reduce((acc, value, key) => {
+
+    acc.evm_vote_count = acc.evm_vote_count + value.evm_vote_count;
+    acc.postal_vote_count = acc.postal_vote_count + value.postal_vote_count;
+    acc.total_vote_count = acc.total_vote_count + value.total_vote_count;
+
+    return acc;
+  }, {
+    evm_vote_count: 0,
+    postal_vote_count: 0,
+    total_vote_count: 0
+  });
+
   constituencies.push({
+    constituency_slug: slugs(constituency),
     constituency_name: constituency,
 
     poll_results: constituencyWise,
@@ -64,26 +78,18 @@ _.each(excelsheet.Sheets, (sheet, constituency) => {
     },
 
     poll_stats: {
+      winning_candidate_name: winningParty.candidate_name,
+      winning_party_slug: slugs(winningParty.party_name),
       win_margin: winningParty.total_vote_count - runnerParty.total_vote_count,
       winner_vote_count: winningParty.total_vote_count,
       runner_vote_count: runnerParty.total_vote_count,
       winning_party_name: winningParty.party_name,
       running_party_name: runnerParty.party_name,
-      top_5: constituencyWise.slice(0, 4)
+      winning_vote_percent: ((winningParty.total_vote_count / VoteStats.total_vote_count) * 100).toFixed(2),
+      top_5: constituencyWise.slice(0, 4),
     },
 
-    vote_stats: constituencyWise.reduce((acc, value, key) => {
-
-      acc.evm_vote_count = acc.evm_vote_count + value.evm_vote_count;
-      acc.postal_vote_count = acc.postal_vote_count + value.postal_vote_count;
-      acc.total_vote_count = acc.total_vote_count + value.total_vote_count;
-
-      return acc;
-    }, {
-      evm_vote_count: 0,
-      postal_vote_count: 0,
-      total_vote_count: 0
-    }),
+    vote_stats: VoteStats,
   });
 
 });
