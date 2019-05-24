@@ -40,16 +40,39 @@ _.each(excelsheet.Sheets, (sheet, constituency) => {
 
   });
 
-  const constituencyWise = jsonDump.filter(item => item.constituency === constituency)
+  const constituencyWise = jsonDump.filter(item => item.constituency === constituency);
+
+  constituencyWise.sort((party1, party2) => {
+    return party2.total_vote_count - party1.total_vote_count;
+  });
+
+  const winningParty = constituencyWise[0];
+  const runnerParty = constituencyWise[1];
 
   constituencies.push({
     constituency_name: constituency,
 
     poll_results: constituencyWise,
 
-    total_candidates: constituencyWise.length,
+    candidate_stats: {
+      total_contestant: constituencyWise.length,
+      total_parties: constituencyWise.filter(item => {
+        return item.party_name.toLowerCase() !== 'independent' && item.party_name.toLowerCase() !== 'none of the above';
+      }).length,
+      total_independent: constituencyWise.filter(item => item.party_name.toLowerCase() === 'independent').length,
+      nota: 1
+    },
 
-    stats: constituencyWise.reduce((acc, value, key) => {
+    poll_stats: {
+      win_margin: winningParty.total_vote_count - runnerParty.total_vote_count,
+      winner_vote_count: winningParty.total_vote_count,
+      runner_vote_count: runnerParty.total_vote_count,
+      winning_party_name: winningParty.party_name,
+      running_party_name: runnerParty.party_name,
+      top_5: constituencyWise.slice(0, 4)
+    },
+
+    vote_stats: constituencyWise.reduce((acc, value, key) => {
 
       acc.evm_vote_count = acc.evm_vote_count + value.evm_vote_count;
       acc.postal_vote_count = acc.postal_vote_count + value.postal_vote_count;
