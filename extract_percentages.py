@@ -1,6 +1,6 @@
 import json
 
-with open("formatted_data.json", "r") as fp:
+with open("docs/data/formatted_data.json", "r") as fp:
     dataset = json.load(fp)
 
 parties = [
