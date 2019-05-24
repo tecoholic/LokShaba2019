@@ -1,0 +1,15 @@
+{
+  "name": "LokShaba2019",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sridharrajs (http://sridhar.co)",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "xlsx": "^0.10.5"
+  }
+}
