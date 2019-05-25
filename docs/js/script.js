@@ -25,7 +25,6 @@ $(document).ready(function () {
   }
 
   $baseTable.bootstrapTable({
-    // url: 'https://github.com/tecoholic/LokShaba2019/blob/master/docs/formatted_data.json',
     url: 'data/formatted_data.json',
     search: false,
     columns: [{
@@ -84,7 +83,7 @@ $(document).ready(function () {
   });
 
   $constituencyTable.bootstrapTable({
-    url: 'formatted_data.json',
+    url: 'data/formatted_data.json',
     search: false,
     columns: [{
       field: 'no',
@@ -154,7 +153,6 @@ $(document).ready(function () {
       return data.poll_results;
     }
   });
-
 
 });
 
