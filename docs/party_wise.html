@@ -6,9 +6,18 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="leaflet/leaflet.css">
     <script src="leaflet/leaflet.js"></script>
-
-
+  <script src="leaflet/leaflet-polygon.fillPattern.js"></script>
     <title>Lok Shaba 2019 - Tamil Nadu Results</title>
+
+  <style>
+    #map {
+      height: 600px;
+    }
+    .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,1); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; }
+    .info h4 { margin: 0 0 5px; color: #777; }
+    .legend { text-align: left; line-height: 18px; color: #555; }
+    .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; border: 1px solid white; }
+  </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -32,8 +41,211 @@
     </div>
 </nav>
 
-<script src="js/jquery-3.3.1.slim.min.js"></script>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h3 class="h3 py-3">Percentage of votes by party</h3>
+      </div>
+      <div class="col-12 col-md-6 py-3">
+        <select class="form-control" name="party_select" id="party_select">
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+  <script>
+    let tnJSON, outline, party_data, legend, info;
+    let consNames, breaks;
+    let party_index = 0;
+
+    const deepPurples = ['#ede7f6', '#b39ddb', '#7e57c2', '#673ab7', '#512da8', '#311b92'];
+    const lightGreens = ['#f1f8e9', '#dcedc8', '#c5e1a5', '#aed581', '#9ccc65', '#8bc34a'];
+    const oranges = ['#fff3e0', '#ffe0b2', '#ffcc80', '#ffb74d', '#ffa726', '#ff9800'];
+    const browns = ['#efebe9', '#d7ccc8', '#bcaaa4', '#a1887f', '#8d6e63', '#795548'];
+    const blueGreys = ['#eceff1', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b'];
+    const blues = ['#e3f2fd', '#bbdefb', '#90caf9', '#64b5f6', '#42a5f5', '#2196f3'];
+    const reds = ['#ffebee', '#ef9a9a', '#e57373', '#f44336', '#d32f2f', '#b71c1c'];
+
+    let swatches = [deepPurples, lightGreens, oranges, browns, blueGreys, blues, reds];
+    let colors = oranges;
+
+    var map = L.map("map", {
+      center: [10.8, 80],
+      zoom: 7,
+      zoomControl: false,
+      dragging: false,
+      doubleClickZoom: false,
+      scrollWheelZoom: false
+    });
+
+    /**
+     * Based on the feature's properties return a color for the fill.
+     * In case of the vote percentage, calculate a array of breaks based on min to max
+     *
+     * @param props
+     */
+    function getFillColor(props) {
+      if (props.pc_name === "Vellore") return "transparent";
+
+      let pc_index = consNames.indexOf(props.pc_name);
+      let value = party_data.percentages[pc_index].percent[party_index];
+      if (!value) return 'transparent';
+      let break_position = 0;
+      for (let i=0; i < 6; i++) {
+        if (value > breaks[i]) {
+          break_position = i;
+        }
+      }
+      return colors[break_position];
+    }
+
+    function baseStyle(feature) {
+      return {
+        fillColor: getFillColor(feature.properties),
+        weight: 1,
+        opacity: 1,
+        color: '#777',
+        fillOpacity: 1
+      }
+    }
+
+    function breaksArray(interval) {
+      return [0, 1*interval, 2*interval, 3*interval, 4*interval, 5*interval];
+    }
+
+    function getBreaks(max) {
+      if (max < 5) {
+        return breaksArray(5/5);
+      }
+      for (var i=1; i < 10; i++) {
+        var ciel = i*10;
+        if (max > ciel) continue;
+        else return breaksArray(ciel/5);
+      }
+    }
+
+    function highlightFeature(e) {
+      var layer = e.target;
+      layer.setStyle({
+        weight: 3,
+        color: '#f44336',
+        fillColor: "#ffeb3b"
+      });
+      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+      }
+      info.update(layer.feature.properties);
+    }
+
+    function resetHighlight(e) {
+      outline.resetStyle(e.target);
+      info.update();
+    }
+
+    function onEachFeature(feature, layer) {
+      layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight
+      })
+    }
+
+    function populatePartyNames() {
+      var select = $('#party_select');
+      select.empty();
+
+      for(let i=0; i<party_data.parties.length; i++) {
+        var option = '<option value="' + i + '">' + party_data.parties[i] + '</option>';
+        select.append(option);
+      }
+    }
+
+    function renderLegend() {
+      // Populate the Legend with the right values
+      if (legend) {
+        legend.remove();
+      }
+
+      legend = L.control({position: 'bottomright'});
+      legend.onAdd = function(map) {
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = breaks;
+        // loop through our density intervals and generate a label with a colored square for each interval
+        div.innerHTML += "<p><strong>Vote share in %</strong></p>"
+        for (var i = 0; i < grades.length - 1; i++) {
+          div.innerHTML +=
+          '<p class="m-0"><i style="background:' + colors[i] + '"></i> ' +
+          grades[i] + ' &ndash; ' + grades[i + 1] + '%</p>';
+        }
+        return div;
+      }
+      legend.addTo(map);
+    }
+
+    function renderInfo() {
+      if (info) info.remove();
+      // Add the header
+      info = L.control();
+      info.onAdd = function(map) {
+        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+        this.update();
+        return this._div;
+      }
+      info.update = function (props) {
+        if (props) {
+          let pc_index = consNames.indexOf(props.pc_name);
+          let value = props.pc_name === "Vellore" ? "NA" : party_data.percentages[pc_index].percent[party_index];
+          this._div.innerHTML = '<h5>'+ party_data.parties[party_index] +'</h5><b>'
+              + props.pc_name + '</b><br />' + value + '%';
+        } else {
+          this._div.innerHTML = '<h5>'+ party_data.parties[party_index] +'</h5><p>Move your mouse over the map</p>';
+        }
+      };
+      info.addTo(map)
+    }
+
+    function renderMap() {
+      let pcts = party_data.percentages.map(function(p){
+        return p.percent[party_index];
+      });
+      let max = Math.max.apply(null, pcts);
+      breaks = getBreaks(max);
+      colors = swatches[Math.floor(Math.random() * swatches.length)];
+      renderLegend();
+      renderInfo();
+      if (outline) outline.remove();
+      outline = L.geoJSON(tnJSON, {style: baseStyle, onEachFeature: onEachFeature}).addTo(map);
+    }
+
+
+    $(document).ready(function() {
+      $.when(
+          // Load the outline
+        $.getJSON("data/tn.geojson", function(tn) { tnJSON = tn; }),
+        // Load the party percentages
+        $.getJSON("data/party_percentages.json", function(data) { party_data = data; })
+
+      ).then(function() {
+        consNames = party_data.percentages.map(function(p) {
+          return p.name;
+        });
+        populatePartyNames();
+        renderMap();
+
+        $('#party_select').on("change", function() {
+          party_index = $(this).val();
+          renderMap();
+        });
+      });
+    });
+
+  </script>
 </body>
 </html>
