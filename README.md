@@ -1,5 +1,9 @@
 # LokShaba2019
 
+## Data Source
+
+Data for this analysis has been taken from [Election Commission of India](http://results.eci.gov.in/pc/en/constituencywise/ConstituencywiseS227.htm?ac=7)
+
 ## Development
 
     node index.js
