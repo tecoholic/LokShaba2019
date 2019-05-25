@@ -113,8 +113,8 @@
   var map = L.map("map", {
     center: [10.8, 80],
     zoom: 7,
-    zoomControl: false,
-    dragging: false,
+      minZoom: 5,
+      maxZoom: 9,
     doubleClickZoom: false,
     scrollWheelZoom: false
   });
