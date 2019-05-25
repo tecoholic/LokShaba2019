@@ -1,0 +1,458 @@
+{
+  "parties": [
+    "Bahujan Samaj Party",
+    "Dravida Munnetra Kazhagam",
+    "Ambedkarite Party of India",
+    "Naam Tamilar Katchi",
+    "Pattali Makkal Katchi",
+    "Makkal Needhi Maiam",
+    "Anti Corruption Dynamic Party",
+    "Pyramid Party of India",
+    "Tamil Nadu Ilangyar Katchi",
+    "Desiya Makkal Sakthi Katchi",
+    "Anaithu Makkal Katchi",
+    "Akila India Vallalar Peravai",
+    "Republican Party of India (A)",
+    "SOCIAL DEMOCRATIC PARTY OF INDIA",
+    "All India Anna Dravida Munnetra Kazhagam",
+    "Indian National Congress",
+    "Desiya Murpokku Dravida Kazhagam",
+    "SOCIALIST UNITY CENTRE OF INDIA (COMMUNIST)",
+    "Makkalatchi Katchi",
+    "People's Party of India(secular)",
+    "Republican Party of India",
+    "Indian Christian Front",
+    "Anaithu Makkal Puratchi Katchi",
+    "Viduthalai Chiruthaigal Katchi",
+    "Bharatiya Janata Party",
+    "Communist Party of India (Marxist)",
+    "Agila India Makkal Kazhagam",
+    "Purvanchal Janta Party (Secular)",
+    "Ilantamilar Munnani Kazhagam",
+    "Ganasangam Party of India",
+    "Ulzaipali Makkal Katchy",
+    "Vivasayigal Makkal Munnetra Katchi",
+    "The Future India Party",
+    "Communist Party of India (Marxist-Leninist) Red Star",
+    "Democratic Corruption Liberation Front",
+    "Desiya Uzhavar Uzhaipalar Kazhagam",
+    "Indian New Congress Party",
+    "All Pensioner’s Party",
+    "Communist Party of India",
+    "Makkal Sananayaga Kudiyarasu Katchi,",
+    "Ahimsa Socialist Party",
+    "Ezhuchi Tamilargal Munnetra Kazhagam",
+    "Indian Union Muslim League",
+    "Pragatishil Samajwadi Party (Lohia)",
+    "Tamizhaga Murpokku Makkal Katchi",
+    "Communist Party of India (Marxist-Leninist) (Liberation)",
+    "Tamil Maanila Congress (Moopanar)",
+    "Samajwadi Forward Bloc",
+    "Tamil Telugu National Party",
+    "Universal Brotherhood Movement",
+    "Naam Indiar Party",
+    "Christian Democratic Front",
+    "Jammu & Kashmir National Panthers Party",
+    "United States of India Party",
+    "All India Uzhavargal Uzhaippalargal Katchi",
+    "Ahila India Dhayaga Makkal Munnetra Katchi",
+    "All India Puratchi Thalaivar Makkal Munnettra Kazhagam"
+  ],
+  "stats": [
+    {
+      "party_name": "Dravida Munnetra Kazhagam",
+      "stats": [
+        {
+          "position": "1",
+          "places": [
+            "Arakonam",
+            "ChennaiCentral",
+            "ChennaiNorth",
+            "ChennaiSouth",
+            "Cuddalore",
+            "Dharmapuri",
+            "Dindigul",
+            "Erode",
+            "Kallakurichi",
+            "Kancheepuram",
+            "Mayiladuthurai",
+            "Namakkal",
+            "Nilgiris",
+            "Perambalur",
+            "Pollachi",
+            "Salem",
+            "Sriperumbudur",
+            "Tenkasi",
+            "Thanjavur",
+            "Thoothukkudi",
+            "Tirunelveli",
+            "Tiruvannamalai",
+            "Viluppuram"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Pattali Makkal Katchi",
+      "stats": [
+        {
+          "position": "2",
+          "places": [
+            "Arakonam",
+            "ChennaiCentral",
+            "Cuddalore",
+            "Dharmapuri",
+            "Dindigul",
+            "Sriperumbudur",
+            "Viluppuram"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Independent",
+      "stats": [
+        {
+          "position": "3",
+          "places": [
+            "Arakonam",
+            "Arani",
+            "Chidambaram",
+            "Cuddalore",
+            "Dharmapuri",
+            "Dindigul",
+            "Kallakurichi",
+            "Madurai",
+            "Mayiladuthurai",
+            "Nagapattinam",
+            "Ramanathapuram",
+            "Sivaganga",
+            "Tenkasi",
+            "Thanjavur",
+            "Theni",
+            "Thoothukkudi",
+            "Thiruchirapalli",
+            "Tirunelveli",
+            "Tiruvannamalai",
+            "Viluppuram",
+            "Virudhunagar"
+          ]
+        },
+        {
+          "position": "4",
+          "places": [
+            "Kancheepuram",
+            "Kanniyakumari",
+            "Karur",
+            "Nilgiris",
+            "Perambalur",
+            "Salem",
+            "Tiruppur"
+          ]
+        },
+        {
+          "position": "5",
+          "places": [
+            "ChennaiNorth",
+            "ChennaiSouth",
+            "Coimbatore",
+            "Erode",
+            "Namakkal",
+            "Pollachi",
+            "Sriperumbudur",
+            "Thanjavur",
+            "Thiruvallur"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Naam Tamilar Katchi",
+      "stats": [
+        {
+          "position": "3",
+          "places": [
+            "Kancheepuram",
+            "Kanniyakumari",
+            "Karur",
+            "Krishnagiri",
+            "Namakkal",
+            "Perambalur"
+          ]
+        },
+        {
+          "position": "4",
+          "places": [
+            "Arakonam",
+            "ChennaiCentral",
+            "Arani",
+            "ChennaiNorth",
+            "ChennaiSouth",
+            "Chidambaram",
+            "Coimbatore",
+            "Cuddalore",
+            "Dharmapuri",
+            "Dindigul",
+            "Erode",
+            "Kallakurichi",
+            "Mayiladuthurai",
+            "Nagapattinam",
+            "Pollachi",
+            "Ramanathapuram",
+            "Sivaganga",
+            "Sriperumbudur",
+            "Tenkasi",
+            "Thanjavur",
+            "Theni",
+            "Thiruvallur",
+            "Thoothukkudi",
+            "Thiruchirapalli",
+            "Tirunelveli",
+            "Tiruvannamalai",
+            "Viluppuram"
+          ]
+        },
+        {
+          "position": "5",
+          "places": [
+            "Madurai",
+            "Salem",
+            "Tiruppur",
+            "Virudhunagar"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Makkal Needhi Maiam",
+      "stats": [
+        {
+          "position": "3",
+          "places": [
+            "ChennaiCentral",
+            "ChennaiNorth",
+            "ChennaiSouth",
+            "Coimbatore",
+            "Erode",
+            "Nilgiris",
+            "Pollachi",
+            "Salem",
+            "Sriperumbudur",
+            "Thiruvallur",
+            "Tiruppur"
+          ]
+        },
+        {
+          "position": "4",
+          "places": [
+            "Madurai",
+            "Namakkal",
+            "Virudhunagar"
+          ]
+        },
+        {
+          "position": "5",
+          "places": [
+            "Arakonam",
+            "Cuddalore",
+            "Dharmapuri",
+            "Dindigul",
+            "Kallakurichi",
+            "Kanniyakumari",
+            "Karur",
+            "Krishnagiri",
+            "Mayiladuthurai",
+            "Nagapattinam",
+            "Ramanathapuram",
+            "Sivaganga",
+            "Tenkasi",
+            "Theni",
+            "Thoothukkudi",
+            "Thiruchirapalli",
+            "Tirunelveli",
+            "Tiruvannamalai",
+            "Viluppuram"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "SOCIAL DEMOCRATIC PARTY OF INDIA",
+      "stats": [
+        {
+          "position": "5",
+          "places": [
+            "ChennaiCentral"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Indian National Congress",
+      "stats": [
+        {
+          "position": "1",
+          "places": [
+            "Arani",
+            "Kanniyakumari",
+            "Karur",
+            "Krishnagiri",
+            "Sivaganga",
+            "Thiruvallur",
+            "Thiruchirapalli",
+            "Virudhunagar"
+          ]
+        },
+        {
+          "position": "2",
+          "places": [
+            "Theni"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "All India Anna Dravida Munnetra Kazhagam",
+      "stats": [
+        {
+          "position": "1",
+          "places": [
+            "Theni"
+          ]
+        },
+        {
+          "position": "2",
+          "places": [
+            "Arani",
+            "ChennaiSouth",
+            "Chidambaram",
+            "Erode",
+            "Kancheepuram",
+            "Karur",
+            "Krishnagiri",
+            "Madurai",
+            "Mayiladuthurai",
+            "Nagapattinam",
+            "Namakkal",
+            "Nilgiris",
+            "Perambalur",
+            "Pollachi",
+            "Salem",
+            "Tenkasi",
+            "Thiruvallur",
+            "Tirunelveli",
+            "Tiruppur",
+            "Tiruvannamalai"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "None of the Above",
+      "stats": [
+        {
+          "position": "4",
+          "places": [
+            "Krishnagiri"
+          ]
+        },
+        {
+          "position": "5",
+          "places": [
+            "Arani",
+            "Chidambaram",
+            "Kancheepuram",
+            "Nilgiris",
+            "Perambalur"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Desiya Murpokku Dravida Kazhagam",
+      "stats": [
+        {
+          "position": "2",
+          "places": [
+            "ChennaiNorth",
+            "Kallakurichi",
+            "Thiruchirapalli",
+            "Virudhunagar"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Viduthalai Chiruthaigal Katchi",
+      "stats": [
+        {
+          "position": "1",
+          "places": [
+            "Chidambaram"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Communist Party of India (Marxist)",
+      "stats": [
+        {
+          "position": "1",
+          "places": [
+            "Coimbatore",
+            "Madurai"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Bharatiya Janata Party",
+      "stats": [
+        {
+          "position": "2",
+          "places": [
+            "Coimbatore",
+            "Kanniyakumari",
+            "Ramanathapuram",
+            "Sivaganga",
+            "Thoothukkudi"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Communist Party of India",
+      "stats": [
+        {
+          "position": "1",
+          "places": [
+            "Nagapattinam",
+            "Tiruppur"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Indian Union Muslim League",
+      "stats": [
+        {
+          "position": "1",
+          "places": [
+            "Ramanathapuram"
+          ]
+        }
+      ]
+    },
+    {
+      "party_name": "Tamil Maanila Congress (Moopanar)",
+      "stats": [
+        {
+          "position": "2",
+          "places": [
+            "Thanjavur"
+          ]
+        }
+      ]
+    }
+  ]
+}

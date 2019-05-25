@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="leaflet/leaflet.css">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
     <script src="leaflet/leaflet.js"></script>
     <title>TN LokShaba 2019</title>
 
@@ -43,6 +48,7 @@
     </style>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="https://tecoholic.github.io/LokShaba2019/">TN LokShaba 2019</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -80,7 +86,18 @@
         </div>
     </div>
 
-
+    <div class="text-center page-footer">
+        <footer>
+            <div>
+                <a href="https://github.com/tecoholic/LokShaba2019/">Opensourced</a> with
+                <span style="color:red;">
+                    <i class="fas fa-heart"></i>
+                </span> by
+                <a href="https://twitter.com/sridharrajs" target="_blank">@sridharrajs</a> & <a
+                    href="https://twitter.com/tecoholic/">@tecoholic</a>
+            </div>
+        </footer>
+    </div>
 
 </div>
 
@@ -106,8 +123,8 @@
   var map = L.map("map", {
     center: [10.8, 80],
     zoom: 7,
-      minZoom: 5,
-      maxZoom: 9,
+    minZoom: 5,
+    maxZoom: 9,
     doubleClickZoom: false,
     scrollWheelZoom: false
   });

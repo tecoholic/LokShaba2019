@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-table.min.css">
 
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
     <title>TN LokShaba 2019</title>
 </head>
 <body>
@@ -30,11 +34,106 @@
     </div>
 </nav>
 
+<div class="container">
+
+    <div class="content">
+        <div class="alert alert-primary" role="alert">
+            Data for this analysis has been taken from <a
+                href="http://results.eci.gov.in/pc/en/constituencywise/ConstituencywiseS227.htm?ac=7">Election
+            Commission of India</a>
+        </div>
+
+        <div>
+            <h5><b>TN Lokshaba 2019 Highlights</b></h5>
+
+            <p>
+
+
+            <ul>
+                <li>Constituency with most number of party candidates is <b>ChennaiCentral</b> with 13 candidates</li>
+                <li>Constituency with most number of independent candidate is <b>Karur</b> with 31 candidates</li>
+                <li>Constituency with most contesting candidates is <b>Karur</b> with 43 candidates</li>
+                <li>Candidate with closest win margin is <b>THOL THIRUMAAVALAVAN of VCK</b> with difference of 3219
+                    votes
+                </li>
+                <li>Candidate with wide margin is <b>VELUSAMY, P. of DMK</b> with a difference of 538972 votes. He has
+                    got 64.35% of 1160046 total vote casted
+                </li>
+            </ul>
+
+            </p>
+
+            <p>
+                There were <b>57</b> parties contesting in this election
+
+            <p class="party-list">
+
+            </p>
+            </p>
+
+
+            <div class="party-stats">
+                <p> Some stats on how well each party performed </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="text-center page-footer">
+        <footer>
+            <div>
+                <a href="https://github.com/tecoholic/LokShaba2019/">Opensourced</a> with
+                <span style="color:red;">
+                    <i class="fas fa-heart"></i>
+                </span> by
+                <a href="https://twitter.com/sridharrajs" target="_blank">@sridharrajs</a> & <a
+                    href="https://twitter.com/tecoholic/">@tecoholic</a>
+            </div>
+        </footer>
+    </div>
+</div>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-table.min.js"></script>
+<script src="js/lodash.min.js"></script>
+<script>
+  var $partylists = $('.party-list');
+  var $partyStats = $('.party-stats');
+
+  $.ajax({
+    method: 'GET',
+    url: 'data/party_data.json',
+    success: function (data) {
+      data.parties.forEach(function (party) {
+        $partylists.append(`<span class="badge badge-secondary">${party}</span>, `);
+      });
+
+      data.stats.forEach(function (value) {
+        let stats = value.stats;
+
+        let block = stats.map(function (details) {
+          let buildPlaces = details.places.map(function (place) {
+            return `<span class="badge badge-light"><a href="constituency_wise.html?constituency=${place.toLowerCase()}">${place}</a></span>`
+          });
+          return `
+             <p>Position ${details.position} in ${details.places.length} places <br>
+                ${buildPlaces}
+             </p>
+          `;
+        });
+
+        $partyStats.append(`<p><b>${value.party_name}</b>${block.join('<br/>')}</p>`);
+
+      });
+
+    }
+  })
+</script>
 
 </body>
 </html>

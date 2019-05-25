@@ -38,15 +38,13 @@ $(document).ready(function () {
     }, {
       field: 'poll_stats.winning_candidate_name',
       title: 'Candidate Name',
-      searchable: true
-    }, {
-      field: 'poll_stats.winning_party_name',
-      title: 'Winner Party',
-      sortable: "true",
-      searchable: false
+      searchable: true,
+      formatter: function (cell, row, enumObject, index) {
+        return `${row.poll_stats.winning_candidate_name} <br> <span class="badge badge-secondary">${row.poll_stats.winning_party_name} </span>`;
+      }
     }, {
       field: 'candidate_stats.total_parties',
-      title: 'Total party candidates',
+      title: 'Party candidates',
       sortable: "true",
       searchable: false
     }, {
@@ -61,22 +59,22 @@ $(document).ready(function () {
       searchable: false
     }, {
       field: 'poll_stats.win_margin',
-      title: 'Winning margin(in votes)',
+      title: 'Win margin',
       sortable: "true",
       searchable: false
     }, {
       field: 'poll_stats.winner_vote_count',
-      title: 'Winning vote count',
+      title: 'Win vote count',
       sortable: "true",
       searchable: false
     }, {
       field: 'vote_stats.total_vote_count',
-      title: 'Total votes casted',
+      title: 'Votes casted',
       sortable: "true",
       searchable: false
     }, {
       field: 'poll_stats.winning_vote_percent',
-      title: 'Winner vote in %',
+      title: 'Win vote %',
       sortable: "true",
       searchable: false
     }]

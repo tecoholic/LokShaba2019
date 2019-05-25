@@ -9,3 +9,16 @@
 .others {
     background-color: moccasin;
 }
+
+.page-footer {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.content {
+    margin-top: 10px;
+}
+
+p {
+    word-break: break-all
+}
