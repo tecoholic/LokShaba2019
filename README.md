@@ -6,7 +6,7 @@
     
 You can see that `formatted_data.json` gets generate for the consumption
 
-Once you've the file with you, cd in to `docs\`
+Once you've the file with you, cd in to `docs/`
 
     python -m SimpleHTTPServer
 

@@ -25,7 +25,8 @@ $(document).ready(function () {
   }
 
   $baseTable.bootstrapTable({
-    url: 'formatted_data.json',
+    // url: 'https://github.com/tecoholic/LokShaba2019/blob/master/docs/formatted_data.json',
+    url: 'data/formatted_data.json',
     search: false,
     columns: [{
       field: 'constituency_name',
