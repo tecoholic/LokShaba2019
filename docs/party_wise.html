@@ -117,7 +117,7 @@
   const blues = ['#e3f2fd', '#bbdefb', '#90caf9', '#64b5f6', '#42a5f5', '#2196f3'];
   const reds = ['#ffebee', '#ef9a9a', '#e57373', '#f44336', '#d32f2f', '#b71c1c'];
 
-  let swatches = [deepPurples, lightGreens, oranges, browns, blueGreys, blues, reds];
+  let swatches = [deepPurples, lightGreens, oranges, browns, blues, reds];
   let colors = oranges;
 
   var map = L.map("map", {
@@ -133,7 +133,7 @@
    * Based on the feature's properties return a color for the fill.
    * In case of the vote percentage, calculate a array of breaks based on min to max
    *
-   * @param props
+   * @param props properties of the feature
    */
   function getFillColor(props) {
     if (props.pc_name === "Vellore") return "transparent";
@@ -267,11 +267,10 @@
     outline = L.geoJSON(tnJSON, {style: baseStyle, onEachFeature: onEachFeature}).addTo(map);
   }
 
-
   $(document).ready(function () {
     $.when(
       // Load the outline
-      $.getJSON("data/tn.geojson", function (tn) {
+      $.getJSON("data/tnhex.geojson", function (tn) {
         tnJSON = tn;
       }),
       // Load the party percentages
