@@ -115,17 +115,13 @@ _.each(excelsheet.Sheets, (sheet, constituency) => {
 
 });
 
-console.log(parties);
-console.log(partyStats);
-console.log(_.groupBy(partyStats, 'party_name'));
 
-
-fs.writeFile('formatted_data.json', JSON.stringify(constituencies), (err) => {
+fs.writeFile('./docs/data/formatted_data.json', JSON.stringify(constituencies), (err) => {
   if (err) {
     console.log(err);
     process.exit(0);
   }
-  console.log("Successfully Written election stats formatted_data.json");
+  console.log('Successfully Written election stats formatted_data.json');
 });
 
 let stats = _.groupBy(partyStats, 'party_name');
@@ -150,7 +146,7 @@ for (let partyName of Object.keys(stats)) {
   })
 }
 
-fs.writeFile('party_data.json', JSON.stringify({
+fs.writeFile('./docs/data/party_data.json', JSON.stringify({
   parties: Array.from(parties),
   stats: partyPosition
 }), (err) => {

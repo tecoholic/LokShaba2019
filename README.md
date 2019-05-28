@@ -6,9 +6,18 @@ Data for this analysis has been taken from [Election Commission of India](http:/
 
 ## Development
 
+Copy the data from Election commission of India site to `LokShaba 2019 TN Candidate Vote Shares.ods` file
+
+
+Install the dependencies using
+
+    npm i
+    
+Run the data generate,
+
     node index.js
     
-You can see that `formatted_data.json` gets generate for the consumption
+You can see that `formatted_data.json` and `party_data.json` gets generate in `docs/data/`
 
 Once you've the file with you, cd in to `docs/`
 
