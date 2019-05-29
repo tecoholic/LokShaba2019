@@ -44,7 +44,7 @@
       margin-left: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: rgba(0,0,0,.25) transparent transparent transparent;
+      border-color: white transparent transparent transparent;
     }
   </style>
 </head>
@@ -81,7 +81,7 @@
             </select>
         </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-sm-12 col-md-6">
             <div id="map">
 
@@ -132,7 +132,7 @@
 
   const deepPurples = ['#ede7f6', '#b39ddb', '#7e57c2', '#673ab7', '#512da8', '#311b92'];
   const lightGreens = ['#f1f8e9', '#dcedc8', '#c5e1a5', '#aed581', '#9ccc65', '#8bc34a'];
-  const oranges = ['#fff3e0', '#ffe0b2', '#ffcc80', '#ffb74d', '#ffa726'];
+  const oranges = ['#fff3e0', '#ffe0b2', '#ffb74d', '#ff9800', '#f57c00'];
   const browns = ['#efebe9', '#d7ccc8', '#bcaaa4', '#a1887f', '#8d6e63', '#795548'];
   const blueGreys = ['#eceff1', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b'];
   const blues = ['#e3f2fd', '#bbdefb', '#90caf9', '#64b5f6', '#42a5f5', '#2196f3'];
@@ -237,14 +237,16 @@
   // Show the Full constituency name and percentage on mouse over
   function handleMouseOver(d, i) {
     let pc_index = consNames.indexOf(d.properties.pc_name);
-    let percentage = party_data.percentages[pc_index].percent[party_index];
+    let percentage = d.properties.pc_name === "Vellore"
+        ? "Election not held"
+        : party_data.percentages[pc_index].percent[party_index];
 
     svg.selectAll(".highlight").remove();
 
     d3.select(this).style("fill", '#ffff00');
     let label = d3.select("#label-" + d.properties.code).attr("class", 'd-none');
     $('#constituency-name').text(d.properties.pc_name);
-    $('#vote-percent').text(percentage + "%");
+    $('#vote-percent').text(percentage + (isNaN(percentage) ? "" : "%"));
     let tooltip = $('#ls-tooltip');
     tooltip.css({
       'left': label.attr("x") - tooltip.width() / 2 + "px",
