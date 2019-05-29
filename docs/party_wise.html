@@ -243,19 +243,19 @@
 
     svg.selectAll(".highlight").remove();
 
-    d3.select(this).style("fill", '#ffff00');
+    d3.select(this).style("fill", '#ffff00').style("opacity", 0.6);
     let label = d3.select("#label-" + d.properties.code).attr("class", 'd-none');
     $('#constituency-name').text(d.properties.pc_name);
     $('#vote-percent').text(percentage + (isNaN(percentage) ? "" : "%"));
     let tooltip = $('#ls-tooltip');
     tooltip.css({
       'left': label.attr("x") - tooltip.width() / 2 + "px",
-      'top': label.attr("y") - tooltip.height() - 43 + "px"
+      'top': label.attr("y") - tooltip.height() - 44 + "px"
     }).show()
   }
 
   function handleMouseOut(d) {
-    d3.select(this).style("fill", getFill)
+    d3.select(this).style("fill", getFill).style("opacity", 1)
     d3.select("#label-" + d.properties.code).attr("class", 'constituency-label');
     $('#ls-tooltip').hide();
 
