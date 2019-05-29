@@ -11,6 +11,42 @@
 
     <title>TN LokShaba 2019</title>
 
+  <style>
+    #map {
+      position: relative;
+    }
+    #ls-tooltip {
+      position: absolute;
+      display: none;
+      text-align: center;
+      z-index: 1000;
+      border-color: rgba(0, 0, 0, 0.25);
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4) !important;
+    }
+    #ls-tooltip > .card-body {
+      padding: 0.5rem;
+    }
+    #constituency-name {
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+    }
+    #vote-percent {
+      font-size: 11px;
+      margin: 0.2rem auto;
+      padding: 0;
+    }
+    #ls-tooltip .card-body::after {
+      content: " ";
+      position: absolute;
+      top: 100%; /* At the bottom of the tooltip */
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: rgba(0,0,0,.25) transparent transparent transparent;
+    }
+  </style>
 </head>
 <body>
 
@@ -46,8 +82,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
-            <div class="col-12" id="map">
+        <div class="col-sm-12 col-md-6">
+            <div id="map">
+
+              <div id="ls-tooltip" class="card swatch-200 shadow">
+                <div class="card-body">
+                  <h5 id="constituency-name"></h5>
+                  <p id="vote-percent"></p>
+                </div>
+              </div>
 
               <div id="data-loading" class="d-flex justify-content-center my-5 py-5">
                 <div class="spinner-grow text-primary" role="status">
@@ -71,6 +114,7 @@
             </div>
         </footer>
     </div>
+
 
 </div>
 
@@ -157,15 +201,22 @@
     legend.append("text")
         .attr("x", 15)
         .style("font", "bold 16px sans-serif")
-        .style("fill", "black")
+        .style("fill", "#212121")
         .text(party_data.parties[party_index])
+
+    legend.append("text")
+        .attr("x", 15)
+        .attr("y", 20)
+        .style("font", "normal 12px sans-serif")
+        .style("fill", "#424242")
+        .text("% of Votes in each constituency")
 
     legend.selectAll("bars")
       .data(oranges)
       .enter()
       .append("rect")
         .attr("x", function(d, i) { return i*40+15; })
-        .attr("y", 18)
+        .attr("y", 30)
         .attr("width", 40)
         .attr("height", 10)
         .style("fill", function(d) { return d; });
@@ -180,7 +231,32 @@
           return this.parentNode.nextSibling ? formatNumber(d) : formatPercent(d/100);
         });
 
-    legend.append("g").attr("transform", "translate(15, 18)").call(axis).select(".domain").attr("stroke", "transparent");
+    legend.append("g").attr("transform", "translate(15, 30)").call(axis).select(".domain").attr("stroke", "transparent");
+  }
+
+  // Show the Full constituency name and percentage on mouse over
+  function handleMouseOver(d, i) {
+    let pc_index = consNames.indexOf(d.properties.pc_name);
+    let percentage = party_data.percentages[pc_index].percent[party_index];
+
+    svg.selectAll(".highlight").remove();
+
+    d3.select(this).style("fill", '#ffff00');
+    let label = d3.select("#label-" + d.properties.code).attr("class", 'd-none');
+    $('#constituency-name').text(d.properties.pc_name);
+    $('#vote-percent').text(percentage + "%");
+    let tooltip = $('#ls-tooltip');
+    tooltip.css({
+      'left': label.attr("x") - tooltip.width() / 2 + "px",
+      'top': label.attr("y") - tooltip.height() - 43 + "px"
+    }).show()
+  }
+
+  function handleMouseOut(d) {
+    d3.select(this).style("fill", getFill)
+    d3.select("#label-" + d.properties.code).attr("class", 'constituency-label');
+    $('#ls-tooltip').hide();
+
   }
 
   // render the map
@@ -189,7 +265,7 @@
     renderLegend();
 
     let u = svg.selectAll(".blocks")
-      .data(tnJSON.features);
+      .data(tnJSON.features)
 
     u.enter()
       .append("path")
@@ -197,12 +273,15 @@
       .attr('d', path)
       .style("fill", getFill)
       .attr("stroke", "#546e7a")
-      .attr("stroke-width", 1);
+      .attr("stroke-width", 1)
+      .on("mouseover", handleMouseOver)
+      .on("mouseout", handleMouseOut);
 
     svg.selectAll(".constituency-label")
         .data(tnJSON.features)
         .enter()
         .append("text")
+        .attr("id", function(d) { return "label-"+d.properties.code; })
         .attr("x", function(d) { return path.centroid(d)[0]; })
         .attr("y", function(d) { return path.centroid(d)[1] + 6 ; })
         .attr("text-anchor", "middle")
