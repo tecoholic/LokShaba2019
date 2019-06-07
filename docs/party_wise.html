@@ -131,12 +131,18 @@
   let party_index = 0;
 
   const deepPurples = ['#ede7f6', '#b39ddb', '#7e57c2', '#673ab7', '#512da8', '#311b92'];
-  const lightGreens = ['#f1f8e9', '#dcedc8', '#c5e1a5', '#aed581', '#9ccc65', '#8bc34a'];
-  const oranges = ['#fff3e0', '#ffe0b2', '#ffb74d', '#ff9800', '#f57c00'];
+  const lightGreens = ['#f1f8e9', '#dcedc8', '#aed581', '#8bc34a', '#689f38'];
+  const oranges = ['#fff3e0', '#ffe0b2', '#ffb74d', '#ff9800', /*'#f57c00',*/ '#ef6c00'];
   const browns = ['#efebe9', '#d7ccc8', '#bcaaa4', '#a1887f', '#8d6e63', '#795548'];
   const blueGreys = ['#eceff1', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b'];
-  const blues = ['#e3f2fd', '#bbdefb', '#90caf9', '#64b5f6', '#42a5f5', '#2196f3'];
+  const blues = ['#e3f2fd', '#bbdefb', '#90caf9', '#64b5f6', /*'#42a5f5',*/ '#2196f3'];
   const reds = ['#ffebee', '#ef9a9a', '#e57373', '#f44336', '#d32f2f', '#b71c1c'];
+  const partyColors = [
+     '#700353', '#EFE7DA','#002626', '#95C623', '#41EAD4', '#6699CC', '#FFF275','#0E4749', '#FF8C42',
+     '#4C1C00',
+    '#320D6D', '#FFBFB7', '#FFD447',
+     '#4C1C00'
+  ]
 
   let swatches = [deepPurples, lightGreens, oranges, browns, blues, reds];
 
@@ -160,7 +166,7 @@
     let pc_index = consNames.indexOf(d.properties.pc_name);
     if (pc_index === -1) return '#FFF';
     let value = party_data.percentages[pc_index].percent[party_index];
-    if (!value) return '#FFF';
+    if (!value) return 'transparent';
     return colors(value);
   }
 
@@ -289,6 +295,8 @@
         .attr("text-anchor", "middle")
         .attr("font-size", "12px")
         .text(function(d) { return d.properties.code; });
+
+    //drawPieCharts();
   }
 
   function updateMap() {
@@ -298,6 +306,51 @@
       .duration(300)
       .style("fill", getFill);
   }
+
+  /**
+   * Trying out pie chart
+  function pieRadius() {
+    var f = tnJSON.features[0];
+    var length = path.measure(f);
+    var radius = length / 6 * Math.sqrt(3) / 2;
+    return radius - 8;
+  }
+
+  function drawPieCharts() {
+    var arc = d3.arc()
+        .outerRadius(pieRadius())
+        .innerRadius(0);
+
+    var chart = svg.selectAll(".chart")
+        .data(tnJSON.features)
+        .enter()
+        .append("g")
+        .attr("class", "chart")
+        .attr("transform", function(d) { return "translate(" + path.centroid(d)[0] + "," + path.centroid(d)[1] + ")"; })
+
+    function getPie(d) {
+      let pc_index = consNames.indexOf(d.properties.pc_name);
+      if (pc_index  === -1) return [];
+      let array = party_data.percentages[pc_index].percent;
+      let total = array.reduce(function(a, b) { return a+b; }, 0);
+      array.push(100-total);
+
+      return d3.pie()
+        .sort(null)
+        .value(function(d) { return d; })(array)
+    }
+
+    chart.selectAll("path.slice")
+        .data(getPie)
+        .enter()
+        .append("path")
+        .attr("class", "slice")
+        .attr("fill", function(d) { return partyColors[d.index];})
+        .attr("d", arc);
+
+  }
+
+   */
 
   $(document).ready(function () {
     $.when(
@@ -323,6 +376,7 @@
         party_index = $(this).val();
         updateMap();
       });
+
     });
   });
 
