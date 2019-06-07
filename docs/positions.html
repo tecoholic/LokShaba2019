@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-table.min.css">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+  <title>TN LokShaba 2019</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="https://tecoholic.github.io/LokShaba2019/">TN LokShaba 2019</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="https://tecoholic.github.io/LokShaba2019/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li>
+          <a class="nav-link" href="constituency_wise.html">Constituency Wise</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="party_wise.html">Party Wise</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <main>
+      <div class="alert alert-info mt-3">
+        Top 5 Positions by Political Parties in Tamilnadu
+      </div>
+      <svg></svg>
+    </main>
+    <footer class="text-center page-footer">
+      Data Source:
+      <a href="http://results.eci.gov.in/pc/en/constituencywise/ConstituencywiseS227.htm?ac=7">
+        Election Commission of India
+      </a>
+      <div>
+        <a href="https://github.com/tecoholic/LokShaba2019/">Opensourced</a> with
+        <span style="color:red;">
+                  <i class="fas fa-heart"></i>
+              </span> by
+        <a href="https://twitter.com/sridharrajs" target="_blank">@sridharrajs</a> & <a
+          href="https://twitter.com/tecoholic/">@tecoholic</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="//d3js.org/d3.v4.min.js"></script>
+  <script>
+    var dataset;
+    var width = 1080,
+        height = 600;
+
+    var svg = d3.select("svg")
+        .attr("width", width)
+        .attr("height", height)
+
+    d3.json("data/party_data.json", function(data) {
+      dataset = formatDataset(data);
+      drawDiagram(dataset.positions[0])
+      drawYAxis();
+      drawXAxis();
+    });
+
+    function formatDataset(data) {
+      let positions = [[], [], [], [], []];
+      let party_names = [];
+      let parties = data.stats;
+      let max = 0;
+
+      for (let i=0; i < parties.length; i++) {
+        let party = parties[i].party_name;
+        let places = parties[i].stats;
+
+        for (let j=0; j < places.length; j++) {
+          let place = places[j];
+          let position = parseInt(place.position) - 1;
+          let count = place.places.length;
+          positions[position].push({
+            "party": party,
+            "count": count
+          });
+          if ( max < count ) {
+            max = count;
+          }
+        }
+
+        if( party_names.indexOf(party) === -1) {
+          party_names.push(party);
+        }
+
+      }
+      console.log(parties)
+      return { parties: party_names, positions, max };
+    }
+
+    function shortForm(name) {
+      let parts = name.split(" ");
+      return parts.reduce(function(acc, curr) { return acc + curr[0]; }, "");
+    }
+
+    function drawDiagram() {
+      let nodes = generateNodes();
+      let colors = d3.schemeCategory20;
+
+      svg.selectAll('rect')
+          .data(nodes)
+          .enter()
+          .append("rect")
+          .attr('x', function(d) { return d.x; })
+          .attr('y', function(d) { return d.y; })
+          .attr('width', function(d) { return d.width; })
+          .attr('height', function(d) { return d.height; })
+          .attr('fill', function(d) {
+            let index = dataset.parties.indexOf(d.party);
+            return colors[index];
+          })
+          .attr('stroke', 'white')
+
+      // No.of seats won - label and shadow
+      svg.selectAll('text.shadow')
+          .data(nodes)
+          .enter()
+          .append("text")
+          .attr("class", "shadow")
+          .attr("x", function(d) { return d.x + d.width/2; })
+          .attr("y", function(d) { return d.y + d.height/2 - 5; })
+          .attr("text-anchor", "middle")
+          .attr("stroke", "white")
+          .attr("stroke-width", 4)
+          .attr("opacity", 0.8)
+          .attr("font-size", "11px")
+          .text(function(d) { return d.count; });
+
+      svg.selectAll('text.count')
+          .data(nodes)
+          .enter()
+          .append("text")
+          .attr("class", "count")
+          .attr("x", function(d) { return d.x + d.width/2; })
+          .attr("y", function(d) { return d.y + d.height/2 - 5; })
+          .attr("text-anchor", "middle")
+          .attr("fill", "black")
+          .attr("font-size", "11px")
+          .text(function(d) { return d.count; });
+
+      svg.selectAll('text.party')
+          .data(nodes.filter(function(node) { return node.width > shortForm(node.party).length*13; }))
+          .enter()
+          .append("text")
+          .attr("class", "party")
+          .attr("x", function(d) { return d.x + d.width/2; })
+          .attr("y", function(d) { return d.y + d.height/2 + 15; })
+          .attr("text-anchor", "middle")
+          .attr("fill", "black")
+          .attr("font-size", "13px")
+          .text(function(d) { return shortForm(d.party).toUpperCase(); });
+
+    }
+
+    function generateNodes() {
+      let padding = 0.5;
+      let boxHeight = (height - 50)/5 - padding;
+      let yOffset = 0;
+      let nodes = [];
+      let widthRatio = (width - 30)/38;
+
+      for (let i = 0; i < 5; i++) {
+        let group = dataset.positions[i];
+        // group.sort(function(a,b) { return b.count - a.count; })
+        let xOffset = 30 + padding;
+
+        for (let j = 0; j < group.length; j++) {
+          let item = group[j];
+          let width = widthRatio * item.count;
+          nodes.push({
+            x: xOffset,
+            y: yOffset,
+            width: width - padding,
+            height: boxHeight,
+            party: item.party,
+            count: item.count
+          })
+          xOffset += width;
+        }
+        yOffset += boxHeight+padding;
+      }
+      return nodes;
+    }
+
+    function drawYAxis() {
+      let positions = [0, 1, 2, 3, 4, 5];
+      let scale = d3.scalePoint().domain(positions).range([0, height-50]);
+      let yaxis = svg.append("g")
+      yaxis.append("text")
+          .attr("x", 10)
+          .attr("y", height/2)
+          .attr("text-anchor", "middle")
+          .attr("fill", "black")
+          .attr("font-size", "12px")
+          .attr("transform", "rotate(-90, 10, "+height/2+")")
+          .text("Position in the constituency");
+
+      yaxis.selectAll("text")
+          .data(positions)
+          .enter()
+          .append("text")
+          .attr("class", "axis-label")
+          .attr("x", 20)
+          .attr("y", function(d) { return scale(d) - 50; })
+          .attr("text-anchor", "middle")
+          .attr("fill", "gray")
+          .attr("font-size", "11px")
+          .text(function(d) { return d; });
+    }
+
+    function drawXAxis() {
+      let xaxis = svg.append("g")
+      xaxis.append("text")
+          .attr("x", width/2)
+          .attr("y", height-25)
+          .attr("text-anchor", "middle")
+          .attr("fill", "black")
+          .attr("font-size", "12px")
+          .text("Number of constituencies");
+    }
+
+  </script>
+
+</body>
+</html>
