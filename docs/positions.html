@@ -109,8 +109,10 @@
       return { parties: party_names, positions, max };
     }
 
+    const NOISE = ['of'];
+
     function shortForm(name) {
-      let parts = name.split(" ");
+      let parts = name.split(" ").filter(word => !NOISE.includes(word));
       return parts.reduce(function(acc, curr) { return acc + curr[0]; }, "");
     }
 
