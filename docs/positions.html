@@ -68,11 +68,11 @@
 
     var svg = d3.select("svg")
         .attr("width", width)
-        .attr("height", height)
+        .attr("height", height);
 
     d3.json("data/party_data.json", function(data) {
       dataset = formatDataset(data);
-      drawDiagram(dataset.positions[0])
+      drawDiagram(dataset.positions[0]);
       drawYAxis();
       drawXAxis();
     });
@@ -105,7 +105,7 @@
         }
 
       }
-      console.log(parties)
+      console.log(parties);
       return { parties: party_names, positions, max };
     }
 
@@ -132,7 +132,7 @@
             let index = dataset.parties.indexOf(d.party);
             return colors[index];
           })
-          .attr('stroke', 'white')
+          .attr('stroke', 'white');
 
       // No.of seats won - label and shadow
       svg.selectAll('text.shadow')
@@ -197,7 +197,7 @@
             height: boxHeight,
             party: item.party,
             count: item.count
-          })
+          });
           xOffset += width;
         }
         yOffset += boxHeight+padding;
@@ -208,7 +208,7 @@
     function drawYAxis() {
       let positions = [0, 1, 2, 3, 4, 5];
       let scale = d3.scalePoint().domain(positions).range([0, height-50]);
-      let yaxis = svg.append("g")
+      let yaxis = svg.append("g");
       yaxis.append("text")
           .attr("x", 10)
           .attr("y", height/2)
@@ -232,7 +232,7 @@
     }
 
     function drawXAxis() {
-      let xaxis = svg.append("g")
+      let xaxis = svg.append("g");
       xaxis.append("text")
           .attr("x", width/2)
           .attr("y", height-25)
