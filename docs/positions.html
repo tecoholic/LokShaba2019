@@ -103,16 +103,22 @@
         if( party_names.indexOf(party) === -1) {
           party_names.push(party);
         }
-
       }
-      console.log(parties);
+
+      // Swapping the position of BJP and AMMK to get the orange colour
+      let bjpIndex = party_names.indexOf("Bharatiya Janata Party");
+      let ammkIndex = party_names.indexOf("Amma Makkal Munnettra Kazagam");
+      party_names.splice(ammkIndex, 1, "Bharatiya Janata Party");
+      party_names.splice(bjpIndex, 1, "Amma Makkal Munnettra Kazagam");
+
       return { parties: party_names, positions, max };
     }
 
-    const NOISE = ['of'];
-
     function shortForm(name) {
-      let parts = name.split(" ").filter(word => !NOISE.includes(word));
+      if (name === "Communist Party of India (Marxist)") return "CPIM";
+      if (name === "Communist Party of India") return "CPI";
+
+      let parts = name.split(" ");
       return parts.reduce(function(acc, curr) { return acc + curr[0]; }, "");
     }
 
